@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:8.1-apache
+    container_name: finsight-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./uploads:/var/www/html/uploads
+    networks:
+      - finsight-network
+    depends_on:
+      - db
+    environment:
+      - APP_ENV=development
+      - DB_HOST=db
+      - DB_NAME=finsight
+      - DB_USER=finsight_user
+      - DB_PASS=finsight_pass
+      - DB_PORT=3306
+
+  db:
+    image: mysql:8.0
+    container_name: finsight-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: finsight
+      MYSQL_USER: finsight_user
+      MYSQL_PASSWORD: finsight_pass
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - finsight-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: finsight-pma
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+    networks:
+      - finsight-network
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+
+networks:
+  finsight-network:
+    driver: bridge
