@@ -19,7 +19,7 @@
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/finsight.git
+   git clone https://github.com/Syarif-H55/FINSIGHT-1.git
    cd finsight
    ```
 
