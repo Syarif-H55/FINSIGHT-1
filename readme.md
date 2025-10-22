@@ -115,3 +115,20 @@ If you need to add more sample data, you can use phpMyAdmin at http://localhost:
 ## License
 
 This project is licensed under the MIT License.
+
+# Create main directories
+mkdir docs, src, uploads, database
+mkdir docs\architecture
+mkdir src\core, src\modules, src\templates, src\assets
+
+# Create core PHP files
+New-Item src\core\config.php, src\core\database.php, src\core\auth.php, src\core\helpers.php -Type File
+
+# Create module directories
+mkdir src\modules\auth, src\modules\transactions, src\modules\budgets, src\modules\goals, src\modules\reports
+
+# Create index file
+New-Item src\index.php -Type File
+
+# Create docker-compose file
+New-Item docker-compose.yml -Type File
